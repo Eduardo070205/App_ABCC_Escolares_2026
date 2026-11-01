@@ -41,7 +41,7 @@
                         <a class="nav-link" href="bajas_cambios.php">ELIMINAR/MODIFICAR</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">BUSQUEDAS</a>
+                        <a class="nav-link" href="buqueda_alumnos.php">BUSQUEDAS</a>
                     </li>
                 
                     <li class="nav-item">

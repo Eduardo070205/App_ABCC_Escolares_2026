@@ -76,6 +76,35 @@
 
         }
 
+        public function consultarAlumnosBusqueda($criterio, $valor){
+
+            // Solo se permiten columnas conocidas; el valor se envia por separado.
+            $campos = [
+                'control' => 'numControl', 'nombre' => 'nombre',
+                'apellido1' => 'primerAp', 'apellido2' => 'segundoAp',
+                'anio' => 'YEAR(fechaNac)', 'semestre' => 'semestre',
+                'carrera' => 'carrera'
+            ];
+            if (!isset($campos[$criterio])) {
+                return false;
+            }
+            $campo = $campos[$criterio];
+            if (in_array($criterio, ['control', 'nombre', 'apellido1', 'apellido2'], true)) {
+                $condicion = "LOCATE(?, $campo) > 0";
+            } else {
+                $condicion = "$campo = ?";
+            }
+            $sql = "SELECT numControl, nombre, primerAp, segundoAp, fechaNac, semestre, carrera FROM alumnos WHERE $condicion";
+            $consulta = mysqli_prepare($this->conexion, $sql);
+            mysqli_stmt_bind_param($consulta, 's', $valor);
+            mysqli_stmt_execute($consulta);
+            $res = mysqli_stmt_get_result($consulta);
+            mysqli_stmt_close($consulta);
+
+            return $res;
+
+        }
+
         
         public function consultarAlumnoNC($nc){
 
