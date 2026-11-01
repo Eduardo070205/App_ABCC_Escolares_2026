@@ -96,7 +96,8 @@
 
     if($nc_correcto && $nombre_correcto && $primerApellido_correcto && $segundoApellido_correcto){
     
-        $res = $alumnoDAO->actualizarAlumno($nc, $nombre, $primerApellido, $segundoApellido, $fechaNac, $semestre, $carrera);
+        $alumno = new Alumno($nc, $nombre, $primerApellido, $segundoApellido, $fechaNac, $semestre, $carrera);
+        $res = $alumnoDAO->actualizarAlumno($alumno);
 
         if($res){
 

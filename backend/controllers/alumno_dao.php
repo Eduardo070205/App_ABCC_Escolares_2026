@@ -1,6 +1,7 @@
 <?php
 
     require_once __DIR__ . '/../config/database/conexion_mysql_escuela.php';
+    require_once __DIR__ . '/../models/alumno_model.php';
 
     //$conexion = new ConexionBDEscuela();
 
@@ -24,7 +25,15 @@
         //========================= Metodos CRUD =======================
 
         // ---------------- ALTAS ---------------
-        public function agregarAlumno($nc, $nombre, $primerAp, $segundoAP, $fechaNac, $semenstre, $carrera){
+        public function agregarAlumno(Alumno $alumno){
+
+            $nc = $alumno->getNumControl();
+            $nombre = $alumno->getNombre();
+            $primerAp = $alumno->getPrimerAp();
+            $segundoAP = $alumno->getSegundoAp();
+            $fechaNac = $alumno->getFechaNac();
+            $semenstre = $alumno->getSemestre();
+            $carrera = $alumno->getCarrera();
 
             $sql = "INSERT INTO alumnos VALUES('$nc','$nombre','$primerAp','$segundoAP','$fechaNac','$semenstre','$carrera')";
 
@@ -50,7 +59,15 @@
 
         // ---------------------- CAMBIOS ------------------------
 
-        public function actualizarAlumno($nc, $nombre, $primerAp, $segundoAp, $fechaNac, $semestre, $carrera){
+        public function actualizarAlumno(Alumno $alumno){
+
+            $nc = $alumno->getNumControl();
+            $nombre = $alumno->getNombre();
+            $primerAp = $alumno->getPrimerAp();
+            $segundoAp = $alumno->getSegundoAp();
+            $fechaNac = $alumno->getFechaNac();
+            $semestre = $alumno->getSemestre();
+            $carrera = $alumno->getCarrera();
             $sql = "UPDATE alumnos 
                     SET nombre = '$nombre', 
                         primerAp = '$primerAp', 

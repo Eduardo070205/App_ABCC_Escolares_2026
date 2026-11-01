@@ -22,7 +22,7 @@
             session_start();
             $_SESSION['usuario_autenticado'] = true;
             $_SESSION['nombre_usuario'] = $user;
-            header("Location: ../../frontend/menu_principal.php");
+            header("Location: ../../frontend/inicio.php");
 
         }else{
 

@@ -1,8 +1,11 @@
 <?php
-    session_start();
-    if(!$_SESSION['usuario_autenticado']){
+    if (session_status() === PHP_SESSION_NONE) {
+        session_start();
+    }
+    if(empty($_SESSION['usuario_autenticado'])){
 
         header("location: login.php");
+        exit;
 
     }
 
@@ -27,7 +30,7 @@
 
     <div class="container">
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <a class="navbar-brand" href="menu_principal.php">ITSJ</a>
+            <a class="navbar-brand" href="inicio.php">ITSJ</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -45,7 +48,7 @@
                     </li>
                 
                     <li class="nav-item">
-                        <a class="nav-link disabled" href="#">Disabled</a>
+                        <a class="nav-link" href="inicio.php">INICIO</a>
                     </li>
 
                     <li class="nav-item">
