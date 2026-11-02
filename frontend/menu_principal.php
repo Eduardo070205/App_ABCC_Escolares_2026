@@ -24,6 +24,7 @@
         integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
         crossorigin="anonymous"></script>
     <title>Document</title>
+    <link href="css/estilos.css" rel="stylesheet">
 </head>
 
 <body>

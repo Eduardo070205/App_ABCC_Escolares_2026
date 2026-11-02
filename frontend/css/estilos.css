@@ -1,0 +1,135 @@
+/* Ajustes compartidos sobre los colores de Bootstrap. */
+body {
+    background-color: #f5f7fa;
+    color: #273444;
+    line-height: 1.6;
+    padding-bottom: 2rem;
+}
+
+.navbar {
+    margin-top: 1rem;
+    margin-bottom: 1.75rem;
+    padding: 1rem 1.25rem;
+    border: 1px solid #e2e7ee;
+    border-radius: 12px;
+    box-shadow: 0 4px 16px rgba(33, 37, 41, 0.04);
+}
+
+.navbar-brand {
+    color: var(--bs-primary);
+    font-weight: 700;
+    letter-spacing: 0.04em;
+}
+
+.navbar .nav-link {
+    border-radius: 6px;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.navbar .nav-link:hover,
+.navbar .nav-link:focus-visible {
+    color: var(--bs-primary);
+    background-color: #eaf2ff;
+}
+
+h1, h3 {
+    font-weight: 650;
+    letter-spacing: -0.025em;
+    margin-bottom: 1.5rem;
+}
+
+h1 {
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
+}
+
+.container > form {
+    background-color: #fff;
+    border: 1px solid #e2e7ee;
+    border-radius: 12px;
+    padding: clamp(1.25rem, 3vw, 2rem);
+    margin-bottom: 1.5rem;
+    box-shadow: 0 4px 20px rgba(33, 37, 41, 0.04);
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+label {
+    font-weight: 500;
+    margin-bottom: 0.4rem;
+}
+
+.form-control, .form-select {
+    min-height: 44px;
+    border-color: #ced6e0;
+    border-radius: 7px;
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: #86b7fe;
+    box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.12);
+}
+
+.form-control[readonly] {
+    background-color: #f3f5f8;
+    color: #606b78;
+}
+
+.btn {
+    border-radius: 7px;
+    padding: 0.55rem 1.1rem;
+    font-weight: 500;
+}
+
+.btn-sm {
+    padding: 0.3rem 0.65rem;
+}
+
+.table {
+    background-color: #fff;
+    border-color: #e9edf2;
+    vertical-align: middle;
+}
+
+.table > thead > tr > th {
+    background-color: #eaf2ff;
+    color: #234b7e;
+    font-weight: 600;
+    white-space: nowrap;
+    padding: 1rem;
+}
+
+.table > tbody > tr > td {
+    padding: 0.85rem 1rem;
+}
+
+.table-responsive {
+    border: 1px solid #e2e7ee;
+    border-radius: 10px;
+    margin-bottom: 1.5rem;
+}
+
+.table-responsive .table {
+    margin-bottom: 0;
+}
+
+.alert, .modal-content {
+    border-radius: 10px;
+}
+
+.auth-page > .container {
+    max-width: 580px;
+    margin-top: 3rem;
+}
+
+@media (max-width: 575px) {
+    .navbar {
+        padding: 0.85rem;
+    }
+
+    .auth-page > .container {
+        margin-top: 1.5rem;
+    }
+}
