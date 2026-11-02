@@ -5,10 +5,10 @@
     class ConexionBDEscuela{
 
         private $conexion;
-        private $host = "localhost:3306";
-        private $usuario = "eduardo";
-        private $password = "Eduardo10";
-        private $bd = "BD_Escuela_Web_2026";
+        private $host = "bhxfz9yg53hqfc0d6xpd-mysql.services.clever-cloud.com:3306";
+        private $usuario = "ugd5muhy0xrqcphp";
+        private $password = "aqfzSxYkbnt792oXRCsV";
+        private $bd = "bhxfz9yg53hqfc0d6xpd";
 
         public function __construct(){
 
