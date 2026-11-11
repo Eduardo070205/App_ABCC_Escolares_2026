@@ -13,7 +13,7 @@ if (!$nc) {
 
 $alumnoDAO = new AlumnoDAO();
 $datos = $alumnoDAO->consultarAlumnoNC($nc);
-$alumno = $datos ? $datos->fetch_assoc() : null;
+$alumno = $datos ? $datos : null;
 
 if (!$alumno) {
     http_response_code(404);

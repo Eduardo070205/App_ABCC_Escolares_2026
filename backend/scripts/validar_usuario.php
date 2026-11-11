@@ -13,11 +13,12 @@
 
     if($conexion){
 
-        $sql = "SELECT * FROM usuarios WHERE usuario = '$user_cifrado' AND password = '$pass_cifrada'";
+        $sql = "SELECT usuario FROM usuarios WHERE usuario = ? AND password = ?";
 
-        $res = mysqli_query($conexion, $sql);
+        $res = $conexion->prepare($sql);
+        $res->execute([$user_cifrado, $pass_cifrada]);
 
-        if(mysqli_num_rows($res)==1){
+        if($res->fetch() !== false){
 
             session_start();
             $_SESSION['usuario_autenticado'] = true;

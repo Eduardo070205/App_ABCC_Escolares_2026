@@ -27,7 +27,7 @@
     $alumnoDAO = new AlumnoDAO();
     $datos = $alumnoDAO->consultarAlumno();
 
-    if (!$datos || mysqli_num_rows($datos) == 0) {
+    if (!$datos || count($datos) == 0) {
         echo "<p>No se encontraron registros.</p>";
     } else {
 
@@ -47,7 +47,7 @@
 
         $i = 0;
 
-        while($fila = mysqli_fetch_assoc($datos)){
+        foreach ($datos as $fila){
             $i++;
                 printf( "<tr> <td>" . $i . "</td>
                               <td>".$fila['numControl']."</td>

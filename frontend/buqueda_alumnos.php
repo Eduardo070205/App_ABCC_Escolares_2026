@@ -58,7 +58,7 @@
         } else {
             $alumnoDAO = new AlumnoDAO();
             $datos = $alumnoDAO->consultarAlumnosBusqueda($criterio, $valor);
-            if (!$datos) {
+            if ($datos === false) {
                 $error = 'No se pudo realizar la búsqueda.';
             }
         }
@@ -115,9 +115,9 @@
 
         <?php if ($error !== ''): ?>
             <div class="alert alert-danger mt-3"><?php echo htmlspecialchars($error, ENT_QUOTES, 'UTF-8'); ?></div>
-        <?php elseif ($datos): ?>
-            <p class="mt-3"><?php echo mysqli_num_rows($datos); ?> registro(s) encontrado(s).</p>
-            <?php if (mysqli_num_rows($datos) === 0): ?>
+        <?php elseif ($datos !== false): ?>
+            <p class="mt-3"><?php echo count($datos); ?> registro(s) encontrado(s).</p>
+            <?php if (count($datos) === 0): ?>
                 <p>No se encontraron alumnos con ese criterio.</p>
             <?php else: ?>
                 <div class="table-responsive">
@@ -129,14 +129,14 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <?php while ($fila = mysqli_fetch_assoc($datos)): ?>
+                            <?php foreach ($datos as $fila): ?>
                                 <tr>
                                     <?php foreach (['numControl', 'nombre', 'primerAp', 'segundoAp', 'fechaNac', 'semestre'] as $campo): ?>
                                         <td><?php echo htmlspecialchars((string) $fila[$campo], ENT_QUOTES, 'UTF-8'); ?></td>
                                     <?php endforeach; ?>
                                     <td><?php echo htmlspecialchars($carreras[$fila['carrera']] ?? $fila['carrera'], ENT_QUOTES, 'UTF-8'); ?></td>
                                 </tr>
-                            <?php endwhile; ?>
+                            <?php endforeach; ?>
                         </tbody>
                     </table>
                 </div>

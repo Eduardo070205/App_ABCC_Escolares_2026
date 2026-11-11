@@ -23,9 +23,10 @@
             $nombreUsuario = $usuario->getNombreUsuario();
             $contrasena = $usuario->getContrasena();
 
-            $sql = "INSERT INTO usuarios VALUES(sha1('$nombreUsuario'),sha1('$contrasena'))";
+            $sql = "INSERT INTO usuarios (usuario, password) VALUES (?, ?)";
 
-            $res = mysqli_query($this->conexion, $sql);
+            $stmt = $this->conexion->prepare($sql);
+            $res = $stmt->execute([sha1($nombreUsuario), sha1($contrasena)]);
 
             return $res;
 

@@ -21,7 +21,7 @@
 
         $datos = $alumnoDAO->consultarAlumnoNC($nc);
 
-        $usuario = $datos->fetch_assoc();
+        $usuario = $datos;
         if (isset($_SESSION['nc']) && (string) $_SESSION['nc'] === (string) $nc) {
             $usuario['numControl'] = $_SESSION['nc'];
             $usuario['nombre'] = $_SESSION['nombre'];

@@ -1,9 +1,9 @@
 <?php
 
 return [
-    'host'     => 'localhost',
-    'usuario'  => 'eduardo',
-    'password' => 'Eduardo10',
-    'bd'       => 'bd_escuela_web_2026',
+    'host'     => 'bhxfz9yg53hqfc0d6xpd-mysql.services.clever-cloud.com',
+    'usuario'  => 'ugd5muhy0xrqcphp',
+    'password' => 'aqfzSxYkbnt792oXRCsV',
+    'bd'       => 'bhxfz9yg53hqfc0d6xpd',
     'puerto'   => 3306,
 ];

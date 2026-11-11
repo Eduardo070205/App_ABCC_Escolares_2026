@@ -2,20 +2,15 @@
 
 header('Content-Type: application/json; charset=utf-8');
 
-if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    header('Allow: POST');
+if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
+    header('Allow: GET');
     http_response_code(405);
-    echo json_encode(['error' => 'Utiliza el metodo POST.']);
+    echo json_encode(['error' => 'Utiliza el metodo GET.']);
     exit;
 }
 
-// Ejemplo: {"nombre":"Ana", "semestre":3}. Un objeto {} consulta todos.
-$datos = json_decode(file_get_contents('php://input'));
-if (json_last_error() !== JSON_ERROR_NONE || !is_object($datos)) {
-    http_response_code(400);
-    echo json_encode(['error' => 'Envia un objeto JSON valido.']);
-    exit;
-}
+// Ejemplo: ?nombre=Ana&semestre=3. Sin filtros consulta todos.
+$datos = $_GET;
 
 $campos = ['numControl', 'nombre', 'primerAp', 'segundoAp', 'fechaNac', 'semestre', 'carrera'];
 $parciales = ['numControl', 'nombre', 'primerAp', 'segundoAp'];
@@ -50,11 +45,12 @@ foreach ($datos as $campo => $valor) {
 }
 
 try {
-    mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+
     require_once __DIR__ . '/../backend/config/database/conexion_mysql_escuela.php';
+    require_once __DIR__ . '/../backend/models/alumno_model.php';
     $con = new ConexionBDEscuela();
     $conexion = $con->getConexion();
-    mysqli_set_charset($conexion, 'utf8mb4');
+
 
     $sql = 'SELECT numControl, nombre, primerAp, segundoAp, fechaNac, semestre, carrera FROM alumnos';
     if ($condiciones) {
@@ -62,25 +58,21 @@ try {
     }
     $sql .= ' ORDER BY numControl';
 
-    $consulta = mysqli_prepare($conexion, $sql);
-    if ($valores) {
-        mysqli_stmt_bind_param($consulta, str_repeat('s', count($valores)), ...$valores);
-    }
-    mysqli_stmt_execute($consulta);
-    $resultado = mysqli_stmt_get_result($consulta);
+    $consulta = $conexion->prepare($sql);
+    $consulta->execute($valores);
     $alumnos = [];
-    while ($fila = mysqli_fetch_assoc($resultado)) {
-        $alumnos[] = $fila;
+    while ($fila = $consulta->fetch()) {
+        $alumnos[] = new Alumno(
+            $fila['numControl'], $fila['nombre'], $fila['primerAp'], $fila['segundoAp'],
+            $fila['fechaNac'], (int) $fila['semestre'], $fila['carrera']
+        );
     }
-    mysqli_free_result($resultado);
-    mysqli_stmt_close($consulta);
-    mysqli_close($conexion);
 
     echo json_encode([
         'alumnos' => $alumnos,
         'consulta' => $alumnos ? 'Consulta exitosa' : 'No hay registros'
     ], JSON_UNESCAPED_UNICODE | JSON_INVALID_UTF8_SUBSTITUTE);
-} catch (mysqli_sql_exception $error) {
+} catch (PDOException $error) {
     error_log('Error en consulta de alumnos: ' . $error->getMessage());
     http_response_code(500);
     echo json_encode(['error' => 'No se pudo realizar la consulta.']);
