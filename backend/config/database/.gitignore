@@ -3,7 +3,7 @@
 return [
     'host'     => 'bhxfz9yg53hqfc0d6xpd-mysql.services.clever-cloud.com',
     'usuario'  => 'ugd5muhy0xrqcphp',
-    'password' => 'aqfzSxYkbnt792oXRCsV',
+    'password' => 'AwDj8Y2zBVnPgwWtgnO1',
     'bd'       => 'bhxfz9yg53hqfc0d6xpd',
     'puerto'   => 3306,
 ];
