@@ -1,38 +1,47 @@
 <?php
 
-    include_once __DIR__ . '/../backend/config/database/conexion_mysql_escuela.php';
+header('Content-Type: application/json; charset=utf-8');
 
-    $con = new ConexionBDEscuela();
-    $conexion = $con->getConexion();
+require_once __DIR__ . '/../backend/config/database/conexion_mysql_escuela.php';
 
-    if($_SERVER["REQUEST_METHOD"] == "POST"){
+function responder(int $codigo, array $cuerpo): void
+{
+    http_response_code($codigo);
+    echo json_encode($cuerpo, JSON_UNESCAPED_UNICODE);
+    exit;
+}
 
-        $cadenaJSON = file_get_contents("php://input");
+if ($_SERVER['REQUEST_METHOD'] !== 'DELETE') {
+    header('Allow: DELETE');
+    responder(405, ['baja' => false, 'error' => 'Método no permitido, use DELETE']);
+}
 
-        if(!$cadenaJSON){
-            echo "No hay cadena JSON";
+// Se acepta ?numControl= en la URL o {"numControl": "..."} en el cuerpo
+$numControl = trim($_GET['numControl'] ?? '');
+if ($numControl === '') {
+    $datos = json_decode(file_get_contents('php://input'), true);
+    $numControl = is_array($datos) ? trim((string)($datos['numControl'] ?? '')) : '';
+}
 
-        }else{
-            $datos = json_decode($cadenaJSON, true);
-            $nc = $datos['numControl'];
+if ($numControl === '') {
+    responder(400, ['baja' => false, 'error' => 'Falta numControl']);
+}
 
-            $sql = "DELETE FROM alumnos WHERE numControl = '$nc'";
+try {
+    $conexion = (new ConexionBDEscuela())->getConexion();
 
-            $res = mysqli_query($conexion, $sql);
+    $stmt = $conexion->prepare('DELETE FROM alumnos WHERE numControl = :nc');
+    $stmt->execute([':nc' => $numControl]);
 
-            $respuesta = array();
-
-            if($res){
-                $respuesta['baja'] = true;
-            }else{
-                $respuesta['baja'] = false;
-            }
-
-            echo json_encode($respuesta);
-
-        }
-
-        
+    if ($stmt->rowCount() === 0) {
+        responder(404, ['baja' => false, 'error' => 'No existe un alumno con ese número de control']);
     }
 
-?>
+    responder(200, ['baja' => true, 'numControl' => $numControl]);
+
+} catch (PDOException $e) {
+    if ($e->getCode() === '23000') { // tiene registros relacionados (llave foránea)
+        responder(409, ['baja' => false, 'error' => 'No se puede eliminar: el alumno tiene registros relacionados']);
+    }
+    responder(500, ['baja' => false, 'error' => 'Error interno del servidor']);
+}

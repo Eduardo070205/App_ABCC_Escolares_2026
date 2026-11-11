@@ -1,0 +1,9 @@
+<?php
+
+return [
+    'host'     => 'localhost',
+    'usuario'  => 'eduardo',
+    'password' => 'Eduardo10',
+    'bd'       => 'bd_escuela_web_2026',
+    'puerto'   => 3306,
+];

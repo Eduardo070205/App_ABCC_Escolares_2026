@@ -1,34 +1,25 @@
 <?php
 
-    // POO
+    // POO + PDO
 
     class ConexionBDEscuela {
 
-        private $conexion;
-        private $host = "bhxfz9yg53hqfc0d6xpd-mysql.services.clever-cloud.com"; 
-        private $usuario = "ugd5muhy0xrqcphp";
-        private $password = "aqfzSxYkbnt792oXRCsV";
-        private $bd = "bhxfz9yg53hqfc0d6xpd";
-        private $puerto = 3306; 
+        private PDO $conexion;
 
         public function __construct() {
 
-            
-            $this->conexion = mysqli_connect(
-                $this->host, 
-                $this->usuario, 
-                $this->password, 
-                $this->bd, 
-                $this->puerto
-            );
+            $c = require __DIR__ . '/.gitignore';
 
-            if (!$this->conexion) {
-                die("Error en la conexion con MYSQL: " . mysqli_connect_error());
-            }
+            $dsn = "mysql:host={$c['host']};port={$c['puerto']};dbname={$c['bd']};charset=utf8mb4";
 
+            $this->conexion = new PDO($dsn, $c['usuario'], $c['password'], [
+                PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
+                PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+                PDO::ATTR_EMULATE_PREPARES   => false,
+            ]);
         }
 
-        public function getConexion() {
+        public function getConexion(): PDO {
             return $this->conexion;
         }
 

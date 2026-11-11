@@ -1,6 +1,6 @@
 <?php
 
-    class Alumno{
+    class Alumno implements JsonSerializable{
 
         private $numControl;
         private $nombre;
@@ -75,6 +75,18 @@
         public function setCarrera($carrera){
             $this->carrera = $carrera;
         }
+
+        public function jsonSerialize(): array{
+        return [
+            'numControl' => $this->numControl,
+            'nombre'     => $this->nombre,
+            'primerAp'   => $this->primerAp,
+            'segundoAp'  => $this->segundoAp,
+            'fechaNac'   => $this->fechaNac,
+            'semestre'   => $this->semestre,
+            'carrera'    => $this->carrera,
+        ];
+    }
 
     }
 
